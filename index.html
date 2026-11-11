@@ -110,6 +110,21 @@
     .avatar { width: clamp(110px, 20vw, 190px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; }
     .avatar img, .avatar-ph { width: 100%; height: 100%; object-fit: cover; }
     .avatar-ph { display: grid; place-items: center; background: var(--forest); border: 3px solid var(--burgundy); border-radius: 50%; color: var(--cream); font-family: var(--font-text); font-style: italic; font-weight: 500; font-size: clamp(2.8rem, 8vw, 5rem); line-height: 1; padding-bottom: .08em; }
+
+    /* Name intro: letters (and notes) hop one after another on first load. JS wraps the letters. */
+    .hop-word { display: inline-block; white-space: nowrap; }
+    .hop { display: inline-block; transform-origin: 50% 100%; }
+    .hop-run .hop { animation: hop 1.35s cubic-bezier(.45, .05, .35, 1) both; animation-delay: calc(var(--i) * .1s + .25s); }
+    .notes .hop { --lift: .38em; --sway: .06em; }
+    /* A soft rise, a little drift and tilt, then a gentle settle, like a note floating on a breeze. */
+    @keyframes hop {
+      0%   { transform: translate(0, 0) rotate(0); }
+      30%  { transform: translate(calc(var(--sway, .03em) * -1), calc(var(--lift, .2em) * -1)) rotate(var(--tilt, -3deg)); }
+      55%  { transform: translate(var(--sway, .03em), calc(var(--lift, .2em) * -.55)) rotate(calc(var(--tilt, -3deg) * -.7)); }
+      78%  { transform: translate(0, calc(var(--lift, .2em) * .12)) rotate(calc(var(--tilt, -3deg) * .25)); }
+      100% { transform: translate(0, 0) rotate(0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .hop-run .hop { animation: none; } }
     .hero h1 { font-family: var(--font-name); font-style: normal; font-weight: 400; font-size: clamp(3.4rem, 11.5vw, 7.5rem); line-height: .95; letter-spacing: -.02em; }
     .role { font-size: clamp(1.3rem, 2.8vw, 1.8rem); line-height: 1.2; color: var(--teal-hi); margin: 1.2rem 0 .8rem; }
     .bio { font-family: var(--font-name); font-size: 1.3rem; max-width: 34rem; color: var(--cream-dim); margin-bottom: 0; }
@@ -228,7 +243,7 @@
         </div>
 
         <div>
-          <h1>alexander marsh <span class="notes" aria-hidden="true">♪♫</span></h1>
+          <h1 id="name" aria-label="Alexander Marsh">alexander marsh <span class="notes" aria-hidden="true">♪♫</span></h1>
           <p class="role">data science &amp; statistics at the university of michigan</p>
           <p class="bio">always curious. </p>
 
@@ -434,6 +449,35 @@
   <script>
     // Footer year
     try { document.getElementById('year').textContent = new Date().getFullYear(); } catch (e) {}
+
+    // Name intro: split the name into hopping letters (plays once on load).
+    (function () {
+      var h = document.getElementById('name');
+      if (!h || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+      var i = 0;
+      function split(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(function (part) {
+              if (!part) return;
+              if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); i += 1; return; }
+              var w = document.createElement('span'); w.className = 'hop-word';
+              Array.from(part).forEach(function (c) {
+                var l = document.createElement('span'); l.className = 'hop'; l.textContent = c;
+                l.style.setProperty('--i', i++);
+                l.style.setProperty('--tilt', (i % 2 ? -3 : 3) + 'deg');
+                w.appendChild(l);
+              });
+              frag.appendChild(w);
+            });
+            node.replaceChild(frag, n);
+          } else if (n.nodeType === 1) { split(n); }
+        });
+      }
+      split(h);
+      requestAnimationFrame(function () { h.classList.add('hop-run'); });
+    })();
 
     // Nudge each article figure (image + caption) so it sits centred
     // between two neighbouring pinstripes. Falls back to no nudge without JS.
