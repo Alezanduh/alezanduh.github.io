@@ -1,521 +1,478 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Alexander Marsh — Data Science &amp; Statistics</title>
-  <meta name="description" content="Alexander Marsh is a Statistics and Data Science student at the University of Michigan building data-driven projects in sports analytics, equity and justice.">
-  <meta name="theme-color" content="#190f02">
-  <meta name="color-scheme" content="dark">
-
-  <!-- Open Graph (link previews). REPLACE the image URL once you have a preview image, e.g. https://alezanduh.github.io/assets/preview.png -->
-  <meta property="og:title" content="Alexander Marsh — Data Science &amp; Statistics">
-  <meta property="og:description" content="Data-driven projects in sports analytics, equity and justice.">
-  <meta property="og:type" content="website">
-  <!-- <meta property="og:image" content="https://alezanduh.github.io/assets/preview.png"> -->
-
-  <!-- Favicon: inline SVG monogram. REPLACE with your own file if you like: <link rel="icon" href="assets/favicon.png"> -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241603'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-style='italic' font-size='30' text-anchor='middle' fill='%23f3ecd9'%3Eam%3C/text%3E%3C/svg%3E">
-
-  <!-- =====================================================================
-       FONTS
-       Titles:  Mestiza Bold, all caps (Adobe Fonts kit below). Name: Sunbeat Strong.
-       Body:    Dashiell Fine from Adobe Fonts if you add your kit, otherwise Newsreader.
-       To use Dashiell Fine: add it to a Web Project at https://fonts.adobe.com, paste the
-       kit <link> in place of the commented-out line, and confirm the CSS family name in
-       the kit's embed code matches --font-text in the <style> block below.
-       ===================================================================== -->
-  <!-- REPLACE WITH YOUR ADOBE FONTS KIT: <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css"> -->
+  <title>Alexander Marsh</title>
+  <meta name="description" content="Alexander Marsh: data science and statistics at the University of Michigan.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23123a3a'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-style='italic' text-anchor='middle' fill='%23f6f1e6'%3Eam%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.typekit.net/zkx2okh.css">
-
-  <script>document.documentElement.classList.add('js');</script>
-
   <style>
-    /* ---------- Design tokens (dark green theme) ---------- */
     :root {
-      color-scheme: dark;
-
-      /* Your palette */
-      --green: #074f24;
-      --teal: #0f5d4b;
-      --burgundy: #631010;
-
-      --bg: #241603;                       /* page background: dark brown */
-      --forest: #0d4a26;                   /* darker green for fills (avatar, hover accents) */
-      --cream: #f3efe3;                    /* primary text */
-      --cream-dim: rgba(245, 240, 224, 0.74);
-      --line: rgba(243, 236, 217, .20);
-      --teal-hi: #8fca9f;                  /* light sage green for accents on brown */
-      --coral: #ec8a84;                    /* light burgundy tint for small accents */
-
-      --font-display: "mestiza", "Oswald", Impact, "Arial Narrow", sans-serif;
-      --font-name: "sunbeat-strong", "Newsreader", Georgia, serif;
-      --font-text: "dashiell-fine", "Newsreader", Georgia, "Times New Roman", serif;
-
-      --maxw: 1000px;
-      --gutter: 20px;
+      --bg: #05070d;
+      --white: #ffffff;
+      --bridge: #e25a2c; /* the red of the bridges */
+      --font-name: "the-seasons", "Newsreader", Georgia, serif; /* The Seasons, from the Adobe Fonts kit */
+      --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
     }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
+    body { font-family: var(--font-serif); color: var(--white); -webkit-font-smoothing: antialiased; }
 
-    /* ---------- Base ---------- */
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg); }
-    /* Full-page pinstripes: --stripes vertical lines spread evenly across the page width */
-    .stripes { --stripes: 30; --stripe-color: rgba(243, 236, 217, .16); position: absolute; inset: 0; z-index: -1; pointer-events: none;
-      background: repeating-linear-gradient(90deg, var(--stripe-color) 0 2px, transparent 2px calc(100% / var(--stripes))); }
-    body { margin: 0; font-family: var(--font-text); font-size: 1.1rem; line-height: 1.6; color: var(--cream); position: relative; -webkit-font-smoothing: antialiased; }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; }
-    p { margin: 0 0 1em; }
-    ::selection { background: var(--burgundy); color: var(--cream); }
-    :focus-visible { outline: 3px solid var(--teal-hi); outline-offset: 3px; border-radius: 4px; }
+    /* The ASCII scene is drawn on this canvas (see the script below). */
+    #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; filter: saturate(1.25) contrast(1.05); }
 
-    /* All-caps title face (Mestiza Bold via Adobe Fonts; text-transform forces caps).
-       Titles are also written in Title Case in the HTML. */
-    h3, .btn, .facts strong, .card-links a {
-      font-family: var(--font-display);
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    h1, h2, h3 { margin: 0; line-height: .95; letter-spacing: .03em; }
+    /* Tilt-shift: the top and bottom of the view are blurred like a scale model. */
+    .tilt { position: fixed; left: 0; right: 0; height: 16%; pointer-events: none; z-index: 1; }
+    .tilt.top    { top: 0;    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+                   -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%); mask-image: linear-gradient(to bottom, #000 0%, transparent 100%); }
+    .tilt.bottom { bottom: 0; backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+                   -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 100%);    mask-image: linear-gradient(to top, #000 0%, transparent 100%); }
 
-    /* Lowercase italic serif (same voice as "talk ball?"): top bar, name, role line and section headers */
-    h1, h2, .role {
-      font-family: var(--font-display);
-      font-weight: 500;
-      text-transform: uppercase;
-    }
+    /* Soft vignette plus a gentle scrim so the white text stays readable. */
+    .shade { position: fixed; inset: 0; pointer-events: none; z-index: 2;
+      background:
+        radial-gradient(ellipse 58% 24% at 50% 88%, rgba(4, 22, 24, .68), rgba(4, 22, 24, 0) 100%),
+        radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 60%, rgba(2, 14, 16, .45) 100%); }
 
-    .wrap { width: min(100% - 2 * var(--gutter), var(--maxw)); margin-inline: auto; }
-    .skip { position: absolute; left: -999px; top: 8px; background: var(--cream); color: var(--bg); padding: .5rem 1rem; z-index: 100; border-radius: 4px; }
-    .skip:focus { left: 8px; }
-    section { scroll-margin-top: 64px; }
+    .content { position: fixed; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      padding: 1rem 16px 3.5vh; text-align: center; }
+    h1 { margin: 0; font-family: var(--font-name); font-weight: 700; font-style: normal; font-size: clamp(2.3rem, 5.6vw, 4.4rem); line-height: 1.05; letter-spacing: .01em;
+      color: var(--bridge); text-shadow: 0 2px 26px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5); }
+    .links { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: .5rem 2rem; margin: 1rem 0 0; padding: 0; list-style: none; max-width: 60rem; }
+    .links a { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-style: italic; font-weight: 400; letter-spacing: .01em;
+      color: var(--white); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .28em;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, .7); transition: color .2s, text-decoration-thickness .2s; }
+    .links a:hover, .links a:focus-visible { color: var(--bridge); text-decoration-thickness: 2.5px; outline: none; }
+    .links a:focus-visible { outline: 2px solid rgba(255, 255, 255, .6); outline-offset: 4px; border-radius: 2px; }
 
-    /* ---------- Navigation ---------- */
-    .site-header { background: #190f02; border-bottom: 1px solid var(--burgundy); z-index: 50; }
-    .nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .2rem 1rem; padding: .7rem 0; }
-    .brand, .nav ul a, .site-footer { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-style: normal; letter-spacing: .03em; }
-    .brand { font-size: 1.9rem; line-height: 1; text-decoration: none; }
-    .brand span { color: var(--coral); }
-    .nav ul { display: flex; flex-wrap: wrap; gap: .2rem 1.1rem; list-style: none; margin: 0; padding: 0; }
-    .nav ul a { text-decoration: none; font-size: 1.05rem; color: var(--cream-dim); transition: color .2s; }
-    .nav ul a:hover { color: var(--cream); }
-    @media (min-width: 720px) { .site-header { position: sticky; top: 0; } .nav ul { gap: 2.2rem; } }
-
-    /* ---------- Hero ---------- */
-    .hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(3rem, 7vw, 5rem); }
-    .hero-grid { display: grid; gap: 2rem; align-items: center; }
-    .avatar { width: clamp(110px, 20vw, 190px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; }
-    .avatar img, .avatar-ph { width: 100%; height: 100%; object-fit: cover; }
-    .avatar-ph { display: grid; place-items: center; background: var(--forest); border: 3px solid var(--burgundy); border-radius: 50%; color: var(--cream); font-family: var(--font-text); font-style: italic; font-weight: 500; font-size: clamp(2.8rem, 8vw, 5rem); line-height: 1; padding-bottom: .08em; }
-
-    /* Name intro: letters (and notes) hop one after another on first load. JS wraps the letters. */
-    .hop-word { display: inline-block; white-space: nowrap; }
-    .hop { display: inline-block; transform-origin: 50% 100%; }
-    .hop-run .hop { animation: hop 1.35s cubic-bezier(.45, .05, .35, 1) both; animation-delay: calc(var(--i) * .1s + .25s); }
-    .notes .hop { --lift: .38em; --sway: .06em; }
-    /* A soft rise, a little drift and tilt, then a gentle settle, like a note floating on a breeze. */
-    @keyframes hop {
-      0%   { transform: translate(0, 0) rotate(0); }
-      30%  { transform: translate(calc(var(--sway, .03em) * -1), calc(var(--lift, .2em) * -1)) rotate(var(--tilt, -3deg)); }
-      55%  { transform: translate(var(--sway, .03em), calc(var(--lift, .2em) * -.55)) rotate(calc(var(--tilt, -3deg) * -.7)); }
-      78%  { transform: translate(0, calc(var(--lift, .2em) * .12)) rotate(calc(var(--tilt, -3deg) * .25)); }
-      100% { transform: translate(0, 0) rotate(0); }
-    }
-    @media (prefers-reduced-motion: reduce) { .hop-run .hop { animation: none; } }
-    .hero h1 { font-family: var(--font-name); font-style: normal; font-weight: 400; font-size: clamp(3.4rem, 11.5vw, 7.5rem); line-height: .95; letter-spacing: -.02em; }
-    .role { font-size: clamp(1.3rem, 2.8vw, 1.8rem); line-height: 1.2; color: var(--teal-hi); margin: 1.2rem 0 .8rem; }
-    .bio { font-family: var(--font-name); font-size: 1.3rem; max-width: 34rem; color: var(--cream-dim); margin-bottom: 0; }
-    .cta { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.6rem; }
-    .btn { display: inline-flex; align-items: center; padding: .45rem 1.1rem .38rem; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; font-size: 1.15rem; line-height: 1.2; letter-spacing: .1em; transition: background .2s, color .2s, border-color .2s; }
-    .btn:hover { background: var(--cream); color: var(--bg); border-color: var(--cream); }
-    .btn.accent { background: var(--burgundy); border-color: var(--burgundy); }
-    .btn.accent:hover { background: var(--cream); border-color: var(--cream); color: var(--bg); }
-    @media (min-width: 760px) { .hero-grid { grid-template-columns: 1fr auto; gap: 3rem; } .avatar { order: 2; } }
-
-    /* ---------- Sections ---------- */
-    .block { padding: clamp(2.5rem, 6vw, 4.5rem) 0; }
-    .block h2 { font-weight: 400; text-transform: lowercase; font-style: italic; font-size: clamp(2.4rem, 5.5vw, 3.6rem); line-height: 1; letter-spacing: -.01em; margin-bottom: 1.6rem; }
-    .block:not(.contact) h2::after { content: ""; display: block; width: 3rem; height: 4px; margin-top: .7rem; background: var(--burgundy); border-radius: 2px; }
-
-    /* About */
-    .about { display: grid; gap: 1.6rem; }
-    .about p { color: var(--cream-dim); }
-    .about p:last-child { margin-bottom: 0; }
-    .facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; align-content: start; }
-    .facts li { padding-left: 1rem; border-left: 3px solid var(--burgundy); }
-    .facts strong { display: block; font-size: 1.4rem; letter-spacing: .07em; line-height: 1.15; }
-    .facts span { color: var(--cream-dim); font-size: .95rem; }
-    @media (min-width: 760px) { .about { grid-template-columns: 7fr 5fr; gap: 3rem; align-items: start; } }
-
-    /* Projects */
-    .grid { display: grid; gap: 1.2rem; }
-    @media (min-width: 720px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 1.4rem; } }
-    .card { display: flex; flex-direction: column; background: rgba(7, 44, 22, 0.908); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; transition: border-color .25s; }
-    .card:hover { border-color: var(--coral); }
-    .card > img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; }
-    .card-body { padding: 1.3rem 1.4rem 1.4rem; display: flex; flex-direction: column; flex: 1; }
-    .card h3 { font-size: 1.9rem; margin-bottom: .6rem; }
-    .card p { color: var(--cream-dim); font-size: 1rem; line-height: 1.55; margin-bottom: 1.1rem; }
-    .card-links { display: flex; flex-wrap: wrap; gap: .3rem 1.3rem; margin-top: auto; }
-    .card-links a { font-size: 1.15rem; letter-spacing: .1em; text-decoration: none; border-bottom: 2px solid var(--burgundy); transition: color .2s, border-color .2s; }
-    .card-links a:hover { color: var(--coral); border-color: var(--coral); }
-
-    /* Featured articles: text on the left, image with caption/credit beneath on the right */
-    .article { display: grid; gap: 1.2rem 2rem; padding: 1.8rem 0; }
-    .article:first-of-type { padding-top: 0; }
-    .article + .article { border-top: 1px solid var(--line); }
-    .article h3 { font-family: var(--font-text); font-weight: 500; text-transform: none; letter-spacing: -.005em; font-size: clamp(1.7rem, 3.2vw, 2.2rem); line-height: 1.15; margin-bottom: .8rem; }
-    .article h3 a { text-decoration: none; }
-    .article h3 a:hover { text-decoration: underline; text-decoration-color: var(--coral); text-underline-offset: 4px; }
-    .article .dek { color: var(--cream-dim); font-size: 1.1rem; line-height: 1.5; margin-bottom: .9rem; }
-    .article .byline { color: var(--cream-dim); font-size: .95rem; margin: 0; }
-    .article figure { margin: 0; }
-    .article .art-img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: rgba(13, 74, 38, .28); border: 3px solid var(--forest); border-radius: 18px; display: block; }
-    .article figcaption { margin-top: .6rem; color: var(--cream-dim); font-size: .85rem; line-height: 1.4; }
-    @media (min-width: 760px) { .article { grid-template-columns: 5fr 7fr; align-items: start; } }
-
-    /* Experience (kept lowercase on purpose, so it uses the text face) */
-    .timeline { list-style: none; margin: 0; padding: 0; }
-    .timeline li { display: grid; gap: .1rem 2rem; padding: .95rem 0; border-bottom: 1px solid rgba(107, 18, 18, .75); }
-    .timeline li:first-child { padding-top: 0; }
-    .timeline li:last-child { border-bottom: 0; padding-bottom: 0; }
-    .tl-role { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.3; }
-    .tl-role .at { color: var(--coral); }
-    .tl-dates { color: var(--cream-dim); font-style: italic; font-size: 1rem; }
-    @media (min-width: 820px) {
-      .timeline li { grid-template-columns: 1fr auto; align-items: baseline; }
-      .tl-dates { text-align: right; white-space: nowrap; }
-    }
-
-    /* Contact + footer (the "talk ball?" header is intentionally lowercase, in the text face) */
-    .contact { text-align: center; padding: clamp(3.5rem, 9vw, 7rem) 0; }
-    .contact h2 { font-family: var(--font-text); font-weight: 500; font-style: italic; text-transform: none; letter-spacing: -.01em; line-height: 1; font-size: clamp(3.4rem, 12vw, 7.5rem); margin-bottom: .8rem; }
-    .contact p { color: var(--cream-dim); font-size: 1.25rem; margin: 0; }
-    .contact a { color: var(--cream); text-decoration-color: var(--coral); text-underline-offset: 4px; }
-    .site-footer { padding: 1.3rem 0 2rem; color: var(--cream-dim); font-size: .95rem; }
-    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 1.5rem; }
-    .foot nav { display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; }
-    .foot a { text-decoration: none; }
-    .foot a:hover { color: var(--coral); text-decoration: underline; text-underline-offset: 3px; }
-
-    /* ---------- Reveal on scroll (only when JS is available) ---------- */
-    .js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
-    .js .reveal.in { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .js .reveal { opacity: 1; transform: none; transition: none; }
-    }
+    .js .content > * { opacity: 0; animation: rise 1.4s ease-out forwards; }
+    .js .content h1 { animation-delay: .5s; }
+    .js .content .links { animation-delay: 1s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .js .content > * { animation: none; opacity: 1; } }
   </style>
+  <script>document.documentElement.classList.add('js');</script>
 </head>
-
 <body>
-  <!-- Full-page pinstripes (about 30 across). Change the count in --stripes, the colour/opacity in --stripe-color. -->
-  <div class="stripes" aria-hidden="true"></div>
-  <a class="skip" href="#main">Skip to content</a>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="tilt top" aria-hidden="true"></div>
+  <div class="tilt bottom" aria-hidden="true"></div>
+  <div class="shade" aria-hidden="true"></div>
 
-  <!-- ===================== HEADER / NAV ===================== -->
-  <header class="site-header">
-    <nav class="nav wrap" aria-label="Primary">
-      <a class="brand" href="#top" aria-label="Alexander Marsh, back to top">a<span>m</span></a>
-      <ul>
-        <li><a href="#about">about</a></li>
-        <li><a href="#projects">projects</a></li>
-        <li><a href="#articles">articles</a></li>
-        <li><a href="#experience">experience</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main id="main">
-
-    <!-- ===================== HERO ===================== -->
-    <section class="hero" id="top" aria-label="Introduction">
-      <div class="wrap hero-grid">
-        <!-- HEADSHOT (currently hidden). To show it: delete the word "hidden" on the next line.
-             To use your own photo: add assets/avatar.jpg, then delete the placeholder <div> and uncomment the <img>. -->
-        <div class="avatar" hidden>
-          <!-- <img src="assets/avatar.jpg" alt="Portrait of Alexander Marsh" width="460" height="460"> -->
-          <div class="avatar-ph" aria-hidden="true">am</div>
-        </div>
-
-        <div>
-          <h1 id="name" aria-label="Alexander Marsh">alexander marsh <span class="notes" aria-hidden="true">♪♫</span></h1>
-          <p class="role">data science &amp; statistics at the university of michigan</p>
-          <p class="bio">always curious. </p>
-
-          <!-- Call-to-action buttons: resume and every contact / social link -->
-          <div class="cta">
-            <!-- REPLACE: swap the PDF in /assets with your latest resume (keep the filename, or update it here) -->
-            <a class="btn accent" href="assets/Alexander-Marsh-Resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
-            <a class="btn" href="mailto:groethe@umich.edu">Email</a>
-            <a class="btn" href="https://www.linkedin.com/in/alexandergroethe/" target="_blank" rel="noopener">LinkedIn ↗</a>
-            <a class="btn" href="https://github.com/Alezanduh" target="_blank" rel="noopener">GitHub ↗</a>
-            <a class="btn" href="https://alexanderhoops.substack.com/" target="_blank" rel="noopener">Substack ↗</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== ABOUT ===================== -->
-    <section class="block" id="about" aria-labelledby="about-h">
-      <div class="wrap reveal">
-        <h2 id="about-h">about me</h2>
-        <div class="about">
-          <div>
-            <p>I'm Alexander, a senior studying Statistics and Data Science at the University of Michigan – Ann Arbor. I spent much of 2026 studying Informatics at King's College London.</p>
-            <p>Data intrigues me as a tool to entertain my inquisitiveness. I adore basketball and you'll find that reflected in most of my applied work, along with data-driven projects that derive tangible benefit and promote equity and justice.</p>
-          </div>
-          <ul class="facts">
-            <li><strong>University Of Michigan</strong><span>B.S. Statistics, Data Science · May 2027</span></li>
-            <li><strong>King's College London</strong><span>Informatics · January – June 2026</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== FEATURED PROJECTS ===================== -->
-    <section class="block" id="projects" aria-labelledby="projects-h">
-      <div class="wrap">
-        <h2 id="projects-h" class="reveal">featured projects</h2>
-
-        <div class="grid">
-
-          <article class="card reveal">
-            <!-- REPLACE WITH YOUR PROJECT IMAGE (optional): <img src="assets/project-mbb.jpg" alt="Michigan Basketball spacing analysis"> -->
-            <div class="card-body">
-              <h3>Insights For Michigan Men's Basketball</h3>
-              <p>Partnered with SkillCorner to engineer spatial and spacing features from high-frequency computer-vision tracking data, then built XGBoost models of Shot Quality and EPA to evaluate pick-and-roll decisions for the coaching staff. Presented at the organization's annual symposium.</p>
-              <div class="card-links">
-                <!-- REPLACE WITH THE GITHUB REPOSITORY LINK for this project (currently points to your profile) -->
-                <a href="https://github.com/Alezanduh" target="_blank" rel="noopener">GitHub ↗</a>
-                <a href="https://docs.google.com/presentation/d/1n9SdwTaZa_dMbo32Hf92RPkYWGmY6gta/edit?usp=sharing" target="_blank" rel="noopener">Presentation ↗</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <!-- REPLACE WITH YOUR PROJECT IMAGE (optional): <img src="assets/project-nba-dashboard.jpg" alt="NBA interactive dashboard screenshot"> -->
-            <div class="card-body">
-              <h3>NBA Interactive Dashboard</h3>
-              <p>End-to-end web app that ingests live play-by-play data through the nba_api and generates matchup summaries from 2005 to present. Models real-time momentum shifts with time-decayed algorithms and a reactive Streamlit front end.</p>
-              <div class="card-links">
-                <a href="https://talkball.streamlit.app/" target="_blank" rel="noopener">Dashboard ↗</a>
-                <a href="https://github.com/Alezanduh/nba-dashboard" target="_blank" rel="noopener">GitHub ↗</a>
-                <!-- REPLACE WITH YOUR LIVE APP LINK (e.g. Streamlit Community Cloud URL), or delete this line -->
-              </div>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <!-- REPLACE WITH YOUR PROJECT IMAGE (optional): <img src="assets/project-wayne-county.jpg" alt="Wayne County case analysis"> -->
-            <div class="card-body">
-              <h3>Wayne County Legal Justice Analysis</h3>
-              <p>Python pipeline that parses and standardizes 31,000 Wayne County case files (2000–2025) into structured JSON and a SQLite database, then analyzes weapons felony charges against Michigan Compiled Laws (MCL) to surface potential over-prosecution and charging stacking that contribute to plea-bargaining disparities.</p>
-              <div class="card-links">
-                <!-- REPLACE WITH THE GITHUB REPOSITORY LINK for this project (currently points to your profile) -->
-                <a href="https://github.com/AlexCSalinas/cicero" target="_blank" rel="noopener">GitHub ↗</a>
-                <a href="https://docs.google.com/presentation/d/1VBWlRRU_D2Zwr81tAM78jeey12PglpGrKbzhN6bgXg8/edit?usp=sharing" target="_blank" rel="noopener"> Initial Findings ↗</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <!-- REPLACE WITH YOUR PROJECT IMAGE (optional): <img src="assets/project-nba-nn.jpg" alt="Neural network forecasting results"> -->
-            <div class="card-body">
-              <h3>Deep Neural Network For NBA Player Forecasting</h3>
-              <p>Deep neural network using Pytorch and TensorFlow trained on rolling seasons to forecast NBA player performance, with normalization and one-hot encoding of positional features, K-fold cross-validation, and regularization to reduce overfitting.</p>
-              <div class="card-links">
-                <!-- REPLACE WITH THE GITHUB REPOSITORY LINK for this project (currently points to your profile) -->
-                <a href="https://github.com/Alezanduh" target="_blank" rel="noopener">GitHub ↗</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== FEATURED ARTICLES ===================== -->
-    <section class="block" id="articles" aria-labelledby="articles-h">
-      <div class="wrap">
-        <h2 id="articles-h" class="reveal">featured articles</h2>
-
-        <!-- ARTICLE SLOT 1. Layout: headline, summary and byline on the left; image with its caption / credit beneath on the right. -->
-        <article class="article reveal">
-          <div>
-            <h3><a href="https://alexanderhoops.substack.com/p/heliocentrism-and-success?r=6cnqh3" target="_blank" rel="noopener">Heliocentrism And Success</a></h3>
-            <p class="dek">A regression analysis in R and Python of how heliocentric, load-heavy players relate to team success.</p>
-            <p class="byline">By Alexander Marsh</p>
-          </div>
-          <figure>
-            <!-- REPLACE WITH YOUR ARTICLE IMAGE: delete the placeholder <div> and use <img class="art-img" src="assets/article-1.jpg" alt="Describe the image"> -->
-              <img class="art-img" src="assets/article-1.jpg" alt="Luka Doncic Heliocentrism" />
-            <!-- REPLACE WITH YOUR CAPTION AND CREDIT, e.g. "Caption text. (Photo: Name / Source)" -->
-            <figcaption>image courtesy of Athabasca Advocate</figcaption>
-          </figure>
-        </article>
-
-        <!-- ARTICLE SLOT 2: replace the headline, link, summary, byline, image and caption. -->
-        <article class="article reveal">
-          <div>
-            <!-- REPLACE WITH YOUR ARTICLE LINK AND TITLE -->
-            <h3><a href="https://alexanderhoops.substack.com/" target="_blank" rel="noopener">Life Imitates Art</a></h3>
-            <p class="dek">The story of the Storm on the Sea of Galilee, an in-depth analysis into the rejection of the mid-range shot in the modern NBA & an introduction to Zen Buddhism.</p>
-            <p class="byline">By Alexander Marsh</p>
-          </div>
-          <figure>
-            <!-- REPLACE WITH YOUR ARTICLE IMAGE: delete the placeholder <div> and use <img class="art-img" src="assets/article-2.jpg" alt="Describe the image"> -->
-              <img class="art-img" src="assets/article-2.jpg" alt="DeMar DeRozan mid-range" />
-            <!-- REPLACE WITH YOUR CAPTION AND CREDIT -->
-            <figcaption>image courtesy of NBA.com</figcaption>
-          </figure>
-        </article>
-
-        <article class="article reveal">
-          <div>
-            <!-- REPLACE WITH YOUR ARTICLE LINK AND TITLE -->
-            <h3><a href="https://alexanderhoops.substack.com/p/the-sea-of-scorigami?r=6cnqh3&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true" target="_blank" rel="noopener">The Sea of Scorigami</a></h3>
-            <p class="dek">An expedition into the deep ocean of NBA scoring outcomes and a deep dive into a few of the water’s deepest trenches.</p>
-            <p class="byline">By Alexander Marsh</p>
-          </div>
-          <figure>
-            <!-- REPLACE WITH YOUR ARTICLE IMAGE: delete the placeholder <div> and use <img class="art-img" src="assets/article-2.jpg" alt="Describe the image"> -->
-              <img class="art-img" src="assets/article-3.jpg" alt="Ty Jerome" />
-            <!-- REPLACE WITH YOUR CAPTION AND CREDIT -->
-            <figcaption>image courtesy of NBA.com</figcaption>
-          </figure>
-        </article>
-      </div>
-    </section>
-
-    <!-- ===================== WORK EXPERIENCE ===================== -->
-    <section class="block" id="experience" aria-labelledby="exp-h">
-      <div class="wrap">
-        <h2 id="exp-h" class="reveal">experience</h2>
-        <!-- Format: [position] @ [company]   [start date] - [end date / present]  (lowercase except GEICO) -->
-        <ol class="timeline reveal">
-          <li>
-            <span class="tl-role">pricing analyst intern <span class="at">@</span> GEICO</span>
-            <span class="tl-dates">may 2026 - august 2026</span>
-          </li>
-          <li>
-            <span class="tl-role">sports analyst assistant <span class="at">@</span> university of michigan human performance &amp; sport science center</span>
-            <span class="tl-dates">august 2026 - present</span>
-          </li>
-          <li>
-            <span class="tl-role">stats 250 instructional assistant <span class="at">@</span> university of michigan department of statistics</span>
-            <span class="tl-dates">august 2025 - present</span>
-          </li>
-          <li>
-            <span class="tl-role">r tutorial lead &amp; lead data analyst <span class="at">@</span> michigan sports analytics society</span>
-            <span class="tl-dates">august 2024 - present</span>
-          </li>
-          <li>
-            <span class="tl-role">manager <span class="at">@</span> east quad blue cafe</span>
-            <span class="tl-dates">august 2024 - present</span>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ===================== CONTACT ===================== -->
-    <section class="block contact" id="contact" aria-labelledby="contact-h">
-      <div class="wrap reveal">
-        <h2 id="contact-h">talk ball?</h2>
-        <p>reach me at <a href="mailto:groethe@umich.edu">groethe@umich.edu</a></p>
-      </div>
-    </section>
-
+  <main class="content">
+    <h1>alexander marsh</h1>
+    <ul class="links">
+      <li><a href="assets/Alexander-Marsh-Resume.pdf" target="_blank" rel="noopener">resume</a></li>
+      <li><a href="mailto:groethe@umich.edu">email</a></li>
+      <li><a href="portfolio/">portfolio</a></li>
+    </ul>
   </main>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="site-footer">
-    <div class="wrap foot">
-      <span>© <span id="year">2026</span> Alexander Marsh</span>
-      <nav aria-label="Footer">
-        <a href="https://www.linkedin.com/in/alexandergroethe/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/Alezanduh" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://alexanderhoops.substack.com/" target="_blank" rel="noopener">Substack</a>
-        <a href="assets/Alexander-Marsh-Resume.pdf" target="_blank" rel="noopener">Resume</a>
-        <a href="#top">Back To Top ↑</a>
-      </nav>
-    </div>
-  </footer>
-
   <script>
-    // Footer year
-    try { document.getElementById('year').textContent = new Date().getFullYear(); } catch (e) {}
+  /* ASCII night garden: cherry trees in full bloom glowing over a still pond, paper lanterns on poles,
+     two red arched bridges, a stone lantern on a rock bank and a tiered fountain, with everything
+     mirrored in the water. No libraries: every glyph's colour and character is computed from a
+     hand-built scene and drawn to the canvas as coloured monospace text. The bank, trees and bridges
+     are computed once and cached; the blossoms shimmer, the lanterns flicker, the pond ripples and
+     petals fall every frame.
+     Tips: add ?t=6 to the URL to freeze the scene at a moment in time; press Space to pause. */
+  (function () {
+    var canvas = document.getElementById('scene');
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    var staticCv = document.createElement('canvas');
+    var sctx = staticCv.getContext('2d');
 
-    // Name intro: split the name into hopping letters (plays once on load).
-    (function () {
-      var h = document.getElementById('name');
-      if (!h || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
-      var i = 0;
-      function split(node) {
-        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
-          if (n.nodeType === 3) {
-            var frag = document.createDocumentFragment();
-            n.textContent.split(/(\s+)/).forEach(function (part) {
-              if (!part) return;
-              if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); i += 1; return; }
-              var w = document.createElement('span'); w.className = 'hop-word';
-              Array.from(part).forEach(function (c) {
-                var l = document.createElement('span'); l.className = 'hop'; l.textContent = c;
-                l.style.setProperty('--i', i++);
-                l.style.setProperty('--tilt', (i % 2 ? -3 : 3) + 'deg');
-                w.appendChild(l);
-              });
-              frag.appendChild(w);
-            });
-            node.replaceChild(frag, n);
-          } else if (n.nodeType === 1) { split(n); }
-        });
+    var FONT = 'ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace';
+    var BG = '#05070d';
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var DESIGN_W = 1.78; // the scene is composed in a 1.78 x 1 space
+    var ZOOM = 1.0;
+    var WL = .625;       // water line: the mirror axis for reflections
+
+    var W, H, cols, rows, cw, lh, fs, kk, cx = .9, cy = .5, gA, n, rowWL;
+    var kind, stChar, stKey, bL, bPh, refR, refG, refB, dynIdx, dynChar, dynKey, ready = false;
+
+    /* ---------- tiny noise helpers ---------- */
+    function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+    function hash(x, y) { var h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return h - Math.floor(h); }
+    function ihash(x, y, k) {
+      var h = (Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263) + Math.imul(k | 0, 1274126177)) | 0;
+      h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16;
+      return (h >>> 0) / 4294967295;
+    }
+    function vnoise(x, y) {
+      var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+      var a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+      var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+      return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+    }
+    function fbm(x, y) { return vnoise(x, y) * .6 + vnoise(x * 2.1 + 5.2, y * 2.1 + 1.3) * .4; }
+    function segDist(x, y, ax, ay, bx, by) {
+      var dx = bx - ax, dy = by - ay, f = clamp(((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy), 0, 1);
+      return Math.hypot(x - (ax + dx * f), y - (ay + dy * f));
+    }
+    function ell(x, y, ex, ey, rx, ry) { var dx = (x - ex) / rx, dy = (y - ey) / ry; return dx * dx + dy * dy < 1; }
+
+    /* ---------- scene description (design space) ---------- */
+    // Paper lanterns on poles: [refX, refY, big], converted from the reference layout.
+    var LAMPS = [[3, 185, 0], [48, 235, 0], [115, 237, 0], [135, 196, 0], [205, 201, 0], [242, 222, 1], [266, 203, 0], [321, 235, 0],
+      [362, 242, 1], [380, 215, 0], [429, 235, 1], [484, 220, 0], [537, 225, 1], [578, 215, 0], [603, 213, 0], [640, 213, 0], [685, 213, 0]]
+      .map(function (a) { var rx = a[2] ? .03 : .021; return { x: a[0] / 800 * 1.78, y: a[1] / 534, rx: rx, ry: rx * 1.3 }; });
+    var TRUNKS = [[.12, .012], [.33, .010], [.66, .012], [.84, .010], [1.24, .012], [1.33, .010], [1.58, .016]];
+    var BRIDGES = [{ x0: .07, x1: .42, base: .545, rise: .05 }, { x0: 1.02, x1: 1.30, base: .566, rise: .028 }];
+
+    var TORO = { x: .74, y: .492 };
+    function glowAt(x, y) {
+      var g = 0, tdx = x - TORO.x, tdy = y - TORO.y, td2 = tdx * tdx + tdy * tdy;
+      g += 1.7 * (Math.exp(-td2 / .0038) + .9 * Math.exp(-td2 / .0009));
+      for (var i = 0; i < LAMPS.length; i++) {
+        var L = LAMPS[i], dx = x - L.x, dy = y - L.y;
+        var d2 = dx * dx + dy * dy; g += (L.rx > .025 ? 1.6 : 1) * (Math.exp(-d2 / .0038) + .9 * Math.exp(-d2 / .0009));
       }
-      split(h);
-      requestAnimationFrame(function () { h.classList.add('hop-run'); });
-    })();
+      return g;
+    }
+    // Northern cardinals perched on the branches: [x, y of the perch, facing]
+    var CARDINALS = [[.40, .235, 1], [1.52, .269, -1]];
+    function cardinalPixel(x, y, B) {
+      var lx = (x - B[0]) * B[2] / 1.7, ly = (B[1] - y) / 1.7 - .017;
+      if (lx < -.052 || lx > .042 || ly < -.007 || ly > .045) return false;
+      if (ell(lx, ly, .0335, .010, .0058, .0036)) { oc = '>'; oR = 245; oG = 154; oB = 52; return true; }                  // beak
+      if (Math.hypot(lx - .0245, ly - .0115) < .0062) { oc = '#'; oR = 36; oG = 12; oB = 14; return true; }                 // black face
+      if (Math.hypot(lx - .019, ly - .0145) < .0125 || ell(lx, ly, .011, .029, .0055, .0095)) { oc = '@'; oR = 224; oG = 28; oB = 42; return true; } // head and crest
+      if (ell(lx, ly, -.006, .002, .0145, .0095)) { oc = '#'; oR = 168; oG = 18; oB = 32; return true; }                   // wing
+      if (ell(lx, ly, 0, 0, .0225, .0168)) { oc = '@'; oR = 214; oG = 26; oB = 40; return true; }                          // body
+      if (ell(lx, ly, -.03, -.008, .023, .0058)) { oc = '='; oR = 160; oG = 18; oB = 30; return true; }                    // tail
+      if (Math.abs(lx - .002) < .0016 && ly < -.0145 && ly > -.021) { oc = '|'; oR = 90; oG = 60; oB = 44; return true; } // leg
+      return false;
+    }
 
-    // Nudge each article figure (image + caption) so it sits centred
-    // between two neighbouring pinstripes. Falls back to no nudge without JS.
-    (function () {
-      var stripes = document.querySelector('.stripes');
-      var figs = document.querySelectorAll('.article figure');
-      function center() {
-        if (!stripes) return;
-        var cell = stripes.getBoundingClientRect().width / 30; // matches --stripes
-        figs.forEach(function (f) {
-          f.style.transform = '';
-          var r = f.getBoundingClientRect();
-          var sx = stripes.getBoundingClientRect().left;
-          var mid = r.left + r.width / 2 - sx;
-          // stripe k covers [k*cell, k*cell+2]; gap midpoint between stripes is (k+.5)*cell + 1
-          var target = (Math.round((mid - 1) / cell - 0.5) + 0.5) * cell + 1;
-          f.style.transform = 'translateX(' + (target - mid).toFixed(2) + 'px)';
-        });
-      }
-      center();
-      window.addEventListener('resize', center);
-      window.addEventListener('load', center);
-    })();
+    function bankBottom(x) { return x < .13 ? .66 : x < 1.07 ? .665 + .014 * (vnoise(x * 14, 1) - .5) : .625 + .012 * (vnoise(x * 11, 4) - .5); }
+    function landTop(x) { return .525 + .02 * (vnoise(x * 9, 3) - .5); }
+    function canopyBottom(x) {
+      return .30 + .1 * (fbm(x * 3, 4) - .5) * 2 + .22 * Math.exp(-Math.pow(x / .28, 2)) + .20 * Math.exp(-Math.pow((x - 1.55) / .4, 2))
+        + .12 * Math.exp(-Math.pow((x - .95) / .22, 2)) + .06 * Math.exp(-Math.pow((x - .15) / .1, 2));
+    }
 
-    // Gentle reveal-on-scroll; content is always visible if this fails.
-    (function () {
-      var els = document.querySelectorAll('.reveal');
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function (el) { el.classList.add('in'); });
+    /* ---------- output state for one cell ---------- */
+    var K = 0, oc = ' ', oR = 0, oG = 0, oB = 0, oL = 0;
+    function put(set, b, c, r, R, G, B) {
+      b = clamp(b, 0, 1);
+      var idx = Math.floor(clamp(b + (hash(c, r) - .5) * .2, 0, .999) * set.length);
+      oc = set.charAt(idx);
+      var f = .6 + .8 * b;
+      oR = R * f; oG = G * f; oB = B * f;
+    }
+    function blossomColor(L) {
+      L = clamp(L, 0, 1.3);
+      var k;
+      if (L < .7) { k = L / .7; oR = 96 + 159 * k; oG = 40 + 112 * k; oB = 64 + 70 * k; }
+      else { k = (L - .7) / .6; oR = 255; oG = 152 + 50 * k; oB = 134 + 30 * k; }
+      oc = '.:*o@'.charAt(Math.floor(clamp(L / 1.31, 0, .999) * 5));
+    }
+
+    /* ---------- the fixed scene (everything except water, blossom shimmer and lantern flicker) ---------- */
+    function evalScene(c, r) {
+      var u = (c + .5) * cw / H, v = (r + .5) * lh / H;
+      var x = (u - gA / 2) / kk + cx, y = (v - .5) / kk + cy;
+      var i, g, d, nz, lit, L, f;
+      K = 0;
+      var gl = glowAt(x, y);
+      lit = clamp(.28 + gl * 1.1, 0, 1.3);
+
+      // foreground stone edge, bottom right
+      if (x > 1.40 && y > .90 - (x - 1.40) * .25) {
+        var jx = ((x - 1.4) * 9 + (y - .9) * 2) % 1, jy = (y * 26) % 1;
+        if (jx < .06 || jy < .1) put('=-', .2, c, r, 60, 48, 42);
+        else put('%#=', .4 + .3 * vnoise(x * 50, y * 50), c, r, 138, 112, 96);
         return;
       }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.12 });
-      els.forEach(function (el) { io.observe(el); });
-    })();
+      // tiered stone fountain on a mossy rock in the pond (left)
+      if (ell(x, y, .30, .77, .17, .045 + .01 * vnoise(x * 20, 6))) {
+        put('%#=', .22 + .35 * vnoise(x * 70, y * 70), c, r, 78, 92, 70); return;
+      }
+      if (ell(x, y, .30, .735, .095, .014) || ell(x, y, .30, .645, .05, .009)) {
+        put('=-', .6 + .3 * Math.sin(x * 120), c, r, 156, 164, 176); return;
+      }
+      if (Math.abs(x - .30) < .006 && y > .64 && y < .75) { put('|I', .5, c, r, 130, 136, 150); return; }
+      if (Math.hypot(x - .30, y - .628) < .0065) { put('o', .6, c, r, 170, 176, 188); return; }
+      // flat stepping stones in the pond
+      if (ell(x, y, 1.08, .712, .06, .014) || ell(x, y, 1.2, .73, .045, .012) || ell(x, y, 1.0, .735, .04, .011)) {
+        put('=%', .4 + .3 * vnoise(x * 60, y * 60), c, r, 150, 120, 98); return;
+      }
+
+      // bridges (red arched wooden bridges)
+      for (i = 0; i < BRIDGES.length; i++) {
+        var B = BRIDGES[i];
+        if (x < B.x0 - .01 || x > B.x1 + .01) continue;
+        var xm = (B.x0 + B.x1) / 2, hw = (B.x1 - B.x0) / 2, q = (x - xm) / hw;
+        if (Math.abs(q) > 1.03) continue;
+        var deck = B.base - B.rise * (1 - q * q);
+        if (y >= deck - .004 && y < deck + .011) { put('=H', .65 + .2 * Math.sin(x * 400), c, r, 226, 90, 44); return; }                // deck
+        if (y >= deck + .011 && y < deck + .02 && Math.abs(q) < .97) { put('#=', .22, c, r, 74, 34, 26); return; }                   // underside shadow
+        var post = ((x - B.x0) / .022) % 1;
+        if (y < deck - .004 && y > deck - .034) {
+          if (post < .16 || post > .98) { put('|I', .75, c, r, 232, 96, 48); return; }                                               // railing posts
+          if (y > deck - .0095 || (y < deck - .027)) { put('=-', .7, c, r, 226, 92, 46); return; }                                   // rails
+        }
+      }
+
+      // cardinals on the high branches
+      for (i = 0; i < CARDINALS.length; i++) {
+        if (Math.abs(x - CARDINALS[i][0]) < .09 && Math.abs(y - CARDINALS[i][1]) < .09 && cardinalPixel(x, y, CARDINALS[i])) return;
+      }
+
+      // water: filled in every frame (mirror of everything above)
+      var onBank = x < .13 || x > .43;
+      var wTop = onBank ? bankBottom(x) : .575;
+      if (y > wTop) { K = 3; return; }
+
+      // stone lantern (toro) on the rocks: a glowing fire box under a curved roof
+      var tx = x - TORO.x, ta = Math.abs(tx);
+      if (ta < .04 && y > .43 && y < .566) {
+        if (y > .548 && ta < .026) { put('#%', .5 + gl * .25, c, r, 150, 126, 104); return; }                                       // base
+        if (y > .52 && y <= .548 && ta < .0105) { put('|I', .55 + gl * .25, c, r, 150, 126, 104); return; }                         // post
+        if (y > .468 && y <= .52 && ta < .027) {                                                                                    // fire box
+          var wy = (y - .494) / .026, wx = tx / .0155;
+          if (ta < .0155 && Math.abs(wy) < 1) {                                                                                     // window
+            K = 2; oL = 5;
+            if (wx * wx + wy * wy > .6) { oc = 'O'; oR = 255; oG = 168; oB = 74; } else { oc = '@'; oR = 255; oG = 247; oB = 214; }
+            return;
+          }
+          put('#%', .55 + gl * .25, c, r, 158, 134, 110); return;
+        }
+        var rh = (.468 - y) / .035;                                                                                                 // swept roof
+        if (y > .43 && y <= .468 && ta < .04 - rh * .026) { put('=#', .6 + gl * .25, c, r, 164, 140, 114); return; }
+        if (Math.hypot(tx, y - .424) < .008) { put('o', .7, c, r, 164, 140, 114); return; }
+      }
+
+      // paper lanterns and their poles
+      for (i = 0; i < LAMPS.length; i++) {
+        g = LAMPS[i];
+        var ldx = (x - g.x) / g.rx, ldy = (y - g.y) / g.ry;
+        var lq = ldx * ldx + ldy * ldy;
+        if (lq < 1) {
+          K = 2; oL = i;
+          if (ldy < -.8 || ldy > .84) { oc = '='; oR = 78; oG = 44; oB = 32; }                      // dark top and bottom caps
+          else if (lq > .6) { oc = 'O'; oR = 255; oG = 168; oB = 74; }                              // glowing orange rim
+          else if (Math.abs(Math.abs(ldx) - .42) < .09) { oc = '|'; oR = 236; oG = 176; oB = 96; }  // paper ribs
+          else { oc = '@'; oR = 255; oG = 247 - ldy * 10; oB = 214 - ldy * 30; }                    // bright core
+          return;
+        }
+        if (Math.abs(x - g.x) < .0019 && y > g.y + g.ry && y < .53) { put('|', .5 + gl * .2, c, r, 120, 92, 66); return; }
+      }
+
+      // the bank: rocks in the middle, shrubs elsewhere
+      var lt = landTop(x);
+      if (y > lt) {
+        if (x > .43 && x < 1.07) {
+          var gsz = .03, gx = Math.floor(x / gsz), gy = Math.floor(y / gsz), best = 9;
+          for (var ox = -1; ox <= 1; ox++) for (var oy = -1; oy <= 1; oy++) {
+            var jx2 = (gx + ox + .2 + .6 * ihash(gx + ox, gy + oy, 1)) * gsz, jy2 = (gy + oy + .2 + .6 * ihash(gx + ox, gy + oy, 2)) * gsz;
+            best = Math.min(best, Math.hypot(x - jx2, y - jy2) / gsz);
+          }
+          if (y < lt + .02 && vnoise(x * 40, y * 40) > .45) { put('.:+o', .25 + lit * .5, c, r, 36, 78, 38); return; }                // moss and shrubs on top
+          if (best < .62) { put('%#=', .2 + lit * .5 + (vnoise(x * 70, y * 70) - .5) * .2, c, r, 150, 118, 94); return; }          // boulder
+          put(':.', .1 + lit * .2, c, r, 40, 30, 26); return;                                                                      // crack
+        }
+        // shrubs
+        nz = fbm(x * 30, y * 30);
+        if (nz > .36) put('.:+o', .2 + lit * .55 + (nz - .5) * .4, c, r, 52 + gl * 40, 92 + gl * 50, 40);
+        else put(',.', .1 + lit * .2, c, r, 28, 42, 28);
+        return;
+      }
+
+      // trunks and branches
+      for (i = 0; i < TRUNKS.length; i++) {
+        var T = TRUNKS[i];
+        if (Math.abs(x - T[0] - .01 * Math.sin(y * 12 + i)) < T[1] && y > canopyBottom(T[0]) - .06 && y < lt) { put('|I!', .35 + lit * .45, c, r, 120, 78, 58); return; }
+      }
+      var bd = Math.min(segDist(x, y, 0, .28, .62, .21), segDist(x, y, 1.78, .22, 1.3, .31), segDist(x, y, .2, .26, .05, .38));
+      if (bd < .012) { put('#=', .32 + lit * .4, c, r, 104, 68, 54); return; }
+
+      // cherry blossoms
+      var cb = canopyBottom(x);
+      if (y < cb) {
+        var gap = Math.exp(-(Math.pow((x - 1.18) / .34, 2) + Math.pow((y - .06) / .16, 2)));
+        nz = fbm(x * 12, y * 12) * .7 + vnoise(x * 36, y * 36) * .3;
+        var fade = clamp((cb - y) / .05, 0, 1);
+        if (nz + .22 * fade - gap * .5 > .45) {
+          K = 1; oL = .5 + gl * .7 + (nz - .5) * 1.0 + .2 * fade; return;
+        }
+        if (gap > .45) { // night sky through the gap
+          if (hash(c, r) > .993) put('.', .9, c, r, 180, 190, 255);
+          else { oc = ' '; oR = 0; oG = 0; oB = 0; }
+          return;
+        }
+        put(',.', .12 + lit * .3, c, r, 60, 30, 46); return;                                                                          // dark branches and shadow
+      }
+      // far dark woods behind everything
+      put(':.+', .3 + lit * .5 + (vnoise(x * 60, y * 60) - .5) * .25, c, r, 104, 92, 56);
+    }
+
+    /* ---------- petals ---------- */
+    var PETALS = [];
+    for (var pi = 0; pi < 110; pi++) {
+      PETALS.push({ ox: hash(pi, 7.7) * 2.0 - .1, oy: hash(pi, 5.3) * .6, life: 14 + hash(pi, 2.1) * 12, ph: hash(pi, 8.8) * 30,
+        vx: -(.012 + hash(pi, 1.1) * .03), vy: .02 + hash(pi, 4.4) * .035, sw: .012 + hash(pi, 6.1) * .03, sp: .6 + hash(pi, 3.9),
+        ch: ['*', "'", '`', ',', '.'][pi % 5] });
+    }
+
+    /* ---------- cached static layer, water reflections, per-frame updates ---------- */
+    function keyOf() { return ((clamp(oR, 0, 255) >> 3) << 10) | ((clamp(oG, 0, 255) >> 3) << 5) | (clamp(oB, 0, 255) >> 3); }
+    var colorCache = {};
+    function cssFor(k) { return colorCache[k] || (colorCache[k] = 'rgb(' + ((k >> 10) << 3) + ',' + (((k >> 5) & 31) << 3) + ',' + ((k & 31) << 3) + ')'); }
+
+    function paintBuckets(target, idxs, count, charsArr, keysArr) {
+      var buckets = {}, k, j, ii;
+      for (j = 0; j < count; j++) { ii = idxs ? idxs[j] : j; k = keysArr[ii]; if (k < 0) continue; (buckets[k] || (buckets[k] = [])).push(ii); }
+      for (k in buckets) {
+        target.fillStyle = cssFor(+k);
+        var arr = buckets[k];
+        for (j = 0; j < arr.length; j++) { ii = arr[j]; target.fillText(charsArr[ii], (ii % cols) * cw, Math.floor(ii / cols) * lh + lh / 2); }
+      }
+    }
+
+    function buildStatic() {
+      var i = 0, r, c, list = [];
+      kind = new Uint8Array(n); bL = new Float32Array(n); bPh = new Float32Array(n);
+      refR = new Uint8Array(n); refG = new Uint8Array(n); refB = new Uint8Array(n);
+      stChar = new Array(n); stKey = new Int32Array(n).fill(-1);
+      for (r = 0; r < rows; r++) {
+        for (c = 0; c < cols; c++, i++) {
+          evalScene(c, r);
+          kind[i] = K;
+          if (K === 1) { bL[i] = oL; bPh[i] = hash(c * .37, r * .53) * 40; blossomColor(oL); }
+          else if (K === 2) { bPh[i] = oL * 3.1; }
+          if (K !== 3) { refR[i] = clamp(oR, 0, 255); refG[i] = clamp(oG, 0, 255); refB[i] = clamp(oB, 0, 255); }
+          if (K === 0) { stChar[i] = oc; stKey[i] = keyOf(); } else list.push(i);
+          if (K === 2) { dynChar0[i] = oc; }
+        }
+      }
+      dynIdx = new Int32Array(list);
+      dynChar = new Array(n); dynKey = new Int32Array(n).fill(-1);
+      staticCv.width = canvas.width; staticCv.height = canvas.height;
+      sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      sctx.fillStyle = BG; sctx.fillRect(0, 0, W, H);
+      sctx.font = 'bold ' + fs + 'px ' + FONT; sctx.textBaseline = 'middle'; sctx.textAlign = 'left';
+      paintBuckets(sctx, null, n, stChar, stKey);
+      ready = true;
+    }
+    var dynChar0 = [];
+
+    function dynCell(i, c, r, t) {
+      var k = kind[i], b, f;
+      if (k === 1) { // blossoms shimmer and sway
+        b = bL[i] + .2 * Math.sin(t * 1.5 + bPh[i]) + .1 * Math.sin(t * .7 + c * .05 + bPh[i] * .3);
+        blossomColor(b);
+      } else if (k === 2) { // lanterns breathe
+        f = .86 + .14 * Math.sin(t * 4.2 + bPh[i]) * Math.sin(t * 2.3 + bPh[i] * 2);
+        oc = dynChar0[i]; oR = refR[i] * f; oG = refG[i] * f; oB = refB[i] * f;
+      } else { // pond: mirror image with ripples
+        var depth = clamp((r - rowWL) / Math.max(1, rows - rowWL), 0, 1);
+        var rip = Math.round(Math.sin(t * 1.4 + c * .21 + r * .7) * (.4 + depth * .9));
+        var sr = 2 * rowWL - r + rip, sc = c + Math.round(Math.sin(t * .9 + r * .35) * 1.2);
+        var R = 5, G = 12, B = 18, lum = 0;
+        if (sr >= 0 && sr < rowWL && sc >= 0 && sc < cols) {
+          var bi = -1, bl = -1, dr, ri, l2;
+          for (dr = -1; dr <= 1; dr++) { // smear a little vertically so lights stretch like reflections
+            var rr = sr + dr; if (rr < 0 || rr >= rows) continue;
+            ri = rr * cols + sc; if (kind[ri] === 3) continue;
+            l2 = refR[ri] + refG[ri] + refB[ri];
+            if (l2 > bl) { bl = l2; bi = ri; }
+          }
+          if (bi >= 0) {
+            var dim = .9 - .32 * depth;
+            R += refR[bi] * dim; G += refG[bi] * dim; B += refB[bi] * dim;
+            lum = (refR[bi] + refG[bi] + refB[bi]) / 3 * dim;
+          }
+        }
+        var sheen = Math.sin(t * 1.1 + c * .5 + r * 1.3 + hash(c, r) * 6);
+        if (sheen > .93) { R += 24; G += 36; B += 46; lum += 25; }
+        oR = R; oG = G; oB = B;
+        oc = lum > 95 ? '|' : lum > 62 ? '!' : lum > 38 ? ':' : lum > 22 ? '~' : '-';
+      }
+    }
+
+    function resize() {
+      W = window.innerWidth; H = window.innerHeight;
+      fs = clamp(W / 330 / .6, 5.5, 9);
+      canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.font = 'bold ' + fs + 'px ' + FONT;
+      ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+      cw = ctx.measureText('M').width; lh = Math.round(fs * 1.2);
+      cols = Math.ceil(W / cw); rows = Math.ceil(H / lh); n = cols * rows;
+      gA = W / H;
+      kk = Math.max(gA / DESIGN_W, 1) * ZOOM;
+      var half = gA / (2 * kk);
+      cx = clamp(.9 + clamp((1.2 - gA) / .8, 0, 1) * .12, half, Math.max(half, DESIGN_W - half));
+      rowWL = Math.floor(((WL - cy) * kk + .5) * H / lh);
+      ready = false;
+    }
+
+    function draw(t) {
+      if (!ready) buildStatic();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(staticCv, 0, 0);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+      var j, ii, c, r;
+      for (j = 0; j < dynIdx.length; j++) {
+        ii = dynIdx[j]; c = ii % cols; r = (ii - c) / cols;
+        dynCell(ii, c, r, t);
+        dynChar[ii] = oc; dynKey[ii] = keyOf();
+      }
+      paintBuckets(ctx, dynIdx, dynIdx.length, dynChar, dynKey);
+
+      // falling petals
+      ctx.fillStyle = 'rgb(255,200,196)';
+      for (var q = 0; q < PETALS.length; q++) {
+        var pt = PETALS[q], age = (t + pt.ph) % pt.life;
+        var px = pt.ox + pt.vx * age + Math.sin(age * pt.sp + pt.ph) * pt.sw;
+        var py = pt.oy + pt.vy * age + Math.sin(age * pt.sp * 1.3 + pt.ph) * pt.sw * .5;
+        var cu = ((px - cx) * kk + gA / 2) * H / cw, cr = ((py - cy) * kk + .5) * H / lh - .5;
+        if (cu < 0 || cr < 0 || cu >= cols || cr >= rows) continue;
+        ctx.fillText(pt.ch, Math.floor(cu) * cw, Math.floor(cr) * lh + lh / 2);
+      }
+    }
+
+    /* ---------- run ---------- */
+    var params = new URLSearchParams(location.search);
+    var still = params.has('t') ? parseFloat(params.get('t')) : null;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var paused = false, start = performance.now(), pausedAt = 0, last = 0;
+
+    resize();
+    if (still !== null || reduce) {
+      var drawStill = function () { draw(still !== null ? still : 6); };
+      drawStill();
+      window.addEventListener('resize', function () { resize(); drawStill(); });
+      return;
+    }
+
+    function loop(now) {
+      requestAnimationFrame(loop);
+      if (paused || document.hidden) return;
+      if (now - last < 1000 / 20) return; // 20 fps keeps it light and a little hand-made
+      last = now;
+      draw((now - start) / 1000);
+    }
+    requestAnimationFrame(loop);
+
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(resize, 120); });
+    window.addEventListener('keydown', function (e) {
+      if (e.code === 'Space' && e.target === document.body) {
+        e.preventDefault();
+        if (paused) { start += performance.now() - pausedAt; paused = false; } else { paused = true; pausedAt = performance.now(); }
+      }
+    });
+  })();
   </script>
 </body>
 </html>
