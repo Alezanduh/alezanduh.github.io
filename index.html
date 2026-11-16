@@ -261,14 +261,13 @@
       // the bank: rocks in the middle, shrubs elsewhere
       var lt = landTop(x);
       if (y > lt) {
-        // footpaths from the bridge ends out to the edges of the scene (about 9px wide on screen)
-        var pw = 4.5 / (H * kk), pd = 9, pi2;
+        // footpaths from the bridge ends out to the edges of the scene (rocky bank, about 30px wide on screen)
+        var pw = 15 / (H * kk), pd = 9, pi2;
         for (pi2 = 0; pi2 < PATHS.length; pi2++) {
           var P = PATHS[pi2];
           for (var pj = 1; pj < P.length; pj++) pd = Math.min(pd, segDist(x, y, P[pj - 1][0], P[pj - 1][1], P[pj][0], P[pj][1]));
         }
-        if (pd < pw) { put(pd < pw * .5 ? '+o' : '.:+', .55 + lit * .35, c, r, pd < pw * .5 ? 104 : 70, pd < pw * .5 ? 156 : 118, pd < pw * .5 ? 66 : 48); return; }
-        if (x > .43 && x < 1.07) {
+        if ((x > .43 && x < 1.07) || pd < pw) {
           var gsz = .03, gx = Math.floor(x / gsz), gy = Math.floor(y / gsz), best = 9;
           for (var ox = -1; ox <= 1; ox++) for (var oy = -1; oy <= 1; oy++) {
             var jx2 = (gx + ox + .2 + .6 * ihash(gx + ox, gy + oy, 1)) * gsz, jy2 = (gy + oy + .2 + .6 * ihash(gx + ox, gy + oy, 2)) * gsz;
