@@ -135,6 +135,8 @@
       LAMPS.push({ x: lpx / 800 * 1.78, y: refY(lpx) / 534, rx: lrx, ry: lrx * 1.3 });
     }
     var TRUNKS = [[.12, .012], [.33, .010], [.66, .012], [.84, .010], [1.24, .012], [1.33, .010], [1.58, .016]];
+    var PATHS = [[[.075, .548], [.04, .572], [.0, .60], [-.05, .62]],
+      [[1.30, .570], [1.40, .582], [1.52, .596], [1.65, .592], [1.78, .606], [1.85, .61]]];
     var BRIDGES = [{ x0: .07, x1: .42, base: .545, rise: .05 }, { x0: 1.02, x1: 1.30, base: .566, rise: .028 }];
 
     function glowAt(x, y) {
@@ -259,6 +261,13 @@
       // the bank: rocks in the middle, shrubs elsewhere
       var lt = landTop(x);
       if (y > lt) {
+        // footpaths from the bridge ends out to the edges of the scene (about 9px wide on screen)
+        var pw = 4.5 / (H * kk), pd = 9, pi2;
+        for (pi2 = 0; pi2 < PATHS.length; pi2++) {
+          var P = PATHS[pi2];
+          for (var pj = 1; pj < P.length; pj++) pd = Math.min(pd, segDist(x, y, P[pj - 1][0], P[pj - 1][1], P[pj][0], P[pj][1]));
+        }
+        if (pd < pw) { put(pd < pw * .5 ? '=#' : '+:', .8 + lit * .2, c, r, 196, 170, 128); return; }
         if (x > .43 && x < 1.07) {
           var gsz = .03, gx = Math.floor(x / gsz), gy = Math.floor(y / gsz), best = 9;
           for (var ox = -1; ox <= 1; ox++) for (var oy = -1; oy <= 1; oy++) {
